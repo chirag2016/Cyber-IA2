@@ -1,19 +1,21 @@
 const express = require('express');
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.get('/hello', (req, res) => {
-    const name = req.query.name || "Please leave feedback";
-    res.json({ message: `Welcome to our web services application, ${name}!` });
+// Middleware to parse JSON requests
+app.use(express.json());
+
+// Basic API endpoint
+app.get('/', (req, res) => {
+    res.send('Welcome to my local web service!');
 });
 
-app.get('/goodbye', (req, res) => {
-    res.json({ message: "Goodbye, see you soon!" });
+// Example API returning JSON data
+app.get('/api/data', (req, res) => {
+    res.json({ message: 'Hello from local server!', status: 'Success' });
 });
 
-app.get('/time', (req, res) => {
-    res.json({ time: new Date().toLocaleString() });
-});
-
-app.listen(3000, () => {
-    console.log('Server running on port 3000');
+// Start server
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
